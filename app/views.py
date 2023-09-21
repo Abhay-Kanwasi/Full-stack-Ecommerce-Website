@@ -1,7 +1,14 @@
 from django.shortcuts import render
+from django.views import View
+from .models import Product, Cart, Customer, OrderedPlaced
 
-def home(request):
- return render(request, 'app/home.html')
+class ProductView(View):
+    def get(self, request):
+        topwears = Product.objects.filter(category='TW')
+        bottomwears = Product.objects.filter(category='BW')
+        mobiles = Product.objects.filter(category='M')
+        laptops = Product.objects.filter(category='L')
+        return render(request, 'app/home.html',{'topwears':topwears, 'bottomwears':bottomwears, 'mobiles':mobiles, 'laptops':laptops})
 
 def product_detail(request):
  return render(request, 'app/productdetail.html')
@@ -12,7 +19,7 @@ def add_to_cart(request):
 def buy_now(request):
  return render(request, 'app/buynow.html')
 
-def profile(request):
+def profile(request): 
  return render(request, 'app/profile.html')
 
 def address(request):

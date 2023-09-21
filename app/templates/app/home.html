@@ -46,23 +46,15 @@
 {% block main-content %}
 <!-- 1st Product Slider -->
 <div class="m-3">
- <h2>Deals of the Day</h2>
- <!-- Slider 1 -->
- <div class="owl-carousel" id="slider1">
-  <a href="{% url 'product-detail' %}" class="btn">
-    <div class="item"><img src="{% static 'app/images/product/1.jpg' %}" alt="" height="200px"><span class="fw-bold">Realme 11X 5G</span><br><span class="fs-5">Rs. 14,999</span></div></a>
-    <div class="item"><img src="{% static 'app/images/product/2.jpg' %}" alt="" height="200px" width: "100px"><span class="fw-bold">Moto g54</span><br><span class="fs-5">Rs. 14,999</span></div>
-    <div class="item"><img src="{% static 'app/images/product/3.jpg' %}" alt="" height="200px" width: "40px"><span class="fw-bold">Infix Zero 30 5G</span><br><span class="fs-5">Rs. 23,999</span></div>
-   <div class="item"><img src="{% static 'app/images/product/4.jpg' %}" alt="" height="200px"><span class="fw-bold">Nothing Phone(1)</span><br><span class="fs-5">Rs. 28,399</span></div>
-    <div class="item"><img src="{% static 'app/images/product/5.jpg' %}" alt="" height="200px" width:"40px"><span class="fw-bold">Apple iPhone 13</span><br><span class="fs-5">Rs. 52,499</span></div>
-    <div class="item"><img src="{% static 'app/images/product/6.jpg' %}" alt="" height="200px"><span class="fw-bold">Vivo T2x 5G</span><br><span class="fs-5">Rs. 15, 999</span></div>
-    <div class="item"><img src="{% static 'app/images/product/7.jpg' %}" alt="" height="200px"><span class="fw-bold">Product 7</span><br><span class="fs-5">Rs. 500</span></div>
-    <div class="item"><img src="{% static 'app/images/product/8.jpg' %}" alt="" height="200px"><span class="fw-bold">Product 8</span><br><span class="fs-5">Rs. 300</span></div>
-    <div class="item"><img src="{% static 'app/images/product/9.jpg' %}" alt="" height="200px"><span class="fw-bold">Product 9</span><br><span class="fs-5">Rs. 600</span></div>
-    <div class="item"><img src="{% static 'app/images/product/10.jpg' %}" alt="" height="200px"><span class="fw-bold">Product 10</span><br><span class="fs-5">Rs. 900</span></div>
-    <div class="item"><img src="{% static 'app/images/product/11.jpg' %}" alt="" height="200px"><span class="fw-bold">Product 11</span><br><span class="fs-5">Rs. 100</span></div>
-    <div class="item"><img src="{% static 'app/images/product/12.jpg' %}" alt="" height="200px"><span class="fw-bold">Product 12</span><br><span class="fs-5">Rs. 200</span></div>
- </div>
+  <h2>GuruJi Store Bottom Wears</h2>
+  <!-- Slider 1 -->
+  <div class="owl-carousel" id="slider1">
+    {% for wears in bottomwears %}
+    <a href="{% url 'product-detail' %}" class="btn">
+      <div class="item"><img src="{{wears.productimg}}" alt="" height="200px"><span class="fw-bold">{{wears.title}}</span><br><span class="fs-5">Rs. {{wears.discounted_price}}</span></div>
+    </a>
+    {% endfor %}
+  </div>
 </div>
 <!-- End 1st Product Slider -->
 

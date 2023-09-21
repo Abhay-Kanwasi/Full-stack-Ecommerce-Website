@@ -58,7 +58,7 @@ CATEGORY_CHOICES = (
     ('TW', 'Top Wear'),
     ('BW', 'Bottom Wear'),
 )
-
+ 
 class Product(models.Model):
     title = models.CharField(max_length=100)
     selling_price = models.FloatField()
