@@ -42,76 +42,107 @@
 </div> 
 <!-- End Live Sale Section -->
 {% endblock livesale %}
-
+<br>
 {% block main-content %}
 <!-- 1st Product Slider -->
-<div class="m-3">
-  <h2>GuruJi Store Bottom Wears</h2>
-  <!-- Slider 1 -->
-  <div class="owl-carousel" id="slider1">
-    {% for wears in bottomwears %}
-    <a href="{% url 'product-detail' %}" class="btn">
-      <div class="item"><img src="{{wears.productimg}}" alt="" height="200px"><span class="fw-bold">{{wears.title}}</span><br><span class="fs-5">Rs. {{wears.discounted_price}}</span></div>
-    </a>
+<div class="product-slider">
+  <div class="m-3" style = "font-family : Serif">
+    <h2>GuruJi Store | Bottom Wears</h2>
+    <!-- Slider 1 -->
+    <div class="owl-carousel" id="slider1">
+      {% for wears in bottomwears %}
+      <div class="card" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); transition: 0.3s border-radius: 5px; height:450px">
+      <a href="{% url 'product-detail' %}" class="btn">
+        <div class="item"><img src="{{wears.product_image.url}}" alt="" height="300px"><span>{{wears.title}}</span><br><span class="fs-5">Rs. {{wears.discount_price}}</span></div>
+      </a>
+    </div>
+    {% endfor %}
+    </div>
+  </div>
+  <!-- End 1st Product Slider -->
+
+  <!-- Payment Info Section -->
+  <div class="container my-5">
+  <div class="row">
+    <div class="col-sm-3">
+    <div class="card mb-3">
+      <div class="card-body">
+      <img src="{% static 'app/images/payavail/cc.jpg' %}" alt="" srcset="" class="img-fluid">
+      </div>
+    </div>
+    </div>
+    <div class="col-sm-3">
+    <div class="card mb-3">
+      <div class="card-body">
+        <img src="{% static 'app/images/payavail/upi.jpg' %}" alt="" srcset="" class="img-fluid">
+      </div>
+    </div>
+    </div>
+    <div class="col-sm-3">
+    <div class="card mb-3">
+      <div class="card-body">
+        <img src="{% static 'app/images/payavail/nb.jpg' %}" alt="" srcset="" class="img-fluid">
+       </div>
+    </div>
+    </div>
+    <div class="col-sm-3">
+     <div class="card mb-3">
+       <div class="card-body">
+       <img src="{% static 'app/images/payavail/bj.jpg' %}" alt="" srcset="" class="img-fluid">
+      </div>
+    </div>
+    </div>
+  </div>
+  </div>
+  <!-- End Payment Info Section -->
+
+  <!-- 2nd Product Slider -->
+  <div class="mx-3" style = "font-family : Serif">
+  <h2>GuruJi Store | Top Wears</h2>
+  <!-- Slider 2 -->
+  <div class="owl-carousel" id="slider2">
+    {% for wears in topwears %}
+    <div class="card" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); transition: 0.3s border-radius: 5px; height:450px;">
+      <a href="{% url 'product-detail' %}" class="btn">
+        <div class="item"><img src="{{wears.product_image.url}}" alt="" height="300px"><span>{{wears.title}}</span><br><span class="fs-5">Rs. {{wears.discount_price}}</span></div>
+     </a>
+    </div>
     {% endfor %}
   </div>
-</div>
-<!-- End 1st Product Slider -->
+  </div>
+  <!-- End 2nd Product Slider -->
 
-<!-- Payment Info Section -->
-<div class="container my-5">
- <div class="row">
-  <div class="col-sm-3">
-   <div class="card mb-3">
-     <div class="card-body">
-     <img src="{% static 'app/images/payavail/cc.jpg' %}" alt="" srcset="" class="img-fluid">
+  <!-- 3rd Product Slider -->
+  <div class="mx-3" style = "font-family : Serif">
+    <h2>GuruJi Store | Laptops</h2>
+    <!-- Slider 2 -->
+    <div class="owl-carousel" id="slider3">
+      {% for laptop in laptops %}
+      <div class="card" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); transition: 0.3s border-radius: 5px; height:450px;">
+        <a href="{% url 'product-detail' %}" class="btn">
+          <div class="item"><img src="{{laptop.product_image.url}}" alt="" height="300px"><span>{{laptop.title}}</span><br><span class="fs-5">Rs. {{laptop.discount_price}}</span>
+          </div>
+        </a>
      </div>
-   </div>
+      {% endfor %}
+    </div>
   </div>
-  <div class="col-sm-3">
-   <div class="card mb-3">
-     <div class="card-body">
-      <img src="{% static 'app/images/payavail/upi.jpg' %}" alt="" srcset="" class="img-fluid">
-     </div>
-   </div>
-  </div>
-  <div class="col-sm-3">
-   <div class="card mb-3">
-     <div class="card-body">
-      <img src="{% static 'app/images/payavail/nb.jpg' %}" alt="" srcset="" class="img-fluid">
-     </div>
-   </div>
-  </div>
-  <div class="col-sm-3">
-   <div class="card mb-3">
-     <div class="card-body">
-      <img src="{% static 'app/images/payavail/bj.jpg' %}" alt="" srcset="" class="img-fluid">
-     </div>
-   </div>
-  </div>
- </div>
-</div>
-<!-- End Payment Info Section -->
 
-<!-- 2nd Product Slider -->
-<div class="mx-3">
- <h2>Trending Deals</h2>
- <!-- Slider 2 -->
- <div class="owl-carousel" id="slider2">
-  <div class="item"><img src="{% static 'app/images/product/12.jpg' %}" alt="" height="200px"><span class="fw-bold">Product 1</span><br><span class="fs-5">Rs. 500</span></div>
-  <div class="item"><img src="{% static 'app/images/product/11.jpg' %}" alt="" height="200px"><span class="fw-bold">Product 2</span><br><span class="fs-5">Rs. 300</span></div>
-  <div class="item"><img src="{% static 'app/images/product/10.jpg' %}" alt="" height="200px"><span class="fw-bold">Product 3</span><br><span class="fs-5">Rs. 100</span></div>
-  <div class="item"><img src="{% static 'app/images/product/9.jpg' %}" alt="" height="200px"><span class="fw-bold">Product 4</span><br><span class="fs-5">Rs. 700</span></div>
-  <div class="item"><img src="{% static 'app/images/product/8.jpg' %}" alt="" height="200px"><span class="fw-bold">Product 5</span><br><span class="fs-5">Rs. 500</span></div>
-  <div class="item"><img src="{% static 'app/images/product/11.jpg' %}" alt="" height="200px"><span class="fw-bold">Product 6</span><br><span class="fs-5">Rs. 400</span></div>
-  <div class="item"><img src="{% static 'app/images/product/5.jpg' %}" alt="" height="200px"><span class="fw-bold">Product 7</span><br><span class="fs-5">Rs. 500</span></div>
-  <div class="item"><img src="{% static 'app/images/product/11.jpg' %}" alt="" height="200px"><span class="fw-bold">Product 8</span><br><span class="fs-5">Rs. 300</span></div>
-  <div class="item"><img src="{% static 'app/images/product/12.jpg' %}" alt="" height="200px"><span class="fw-bold">Product 9</span><br><span class="fs-5">Rs. 600</span></div>
-  <div class="item"><img src="{% static 'app/images/product/7.jpg' %}" alt="" height="200px"><span class="fw-bold">Product 10</span><br><span class="fs-5">Rs. 900</span></div>
-  <div class="item"><img src="{% static 'app/images/product/6.jpg' %}" alt="" height="200px"><span class="fw-bold">Product 11</span><br><span class="fs-5">Rs. 100</span></div>
-  <div class="item"><img src="{% static 'app/images/product/10.jpg' %}" alt="" height="200px"><span class="fw-bold">Product 12</span><br><span class="fs-5">Rs. 200</span></div>
- </div>
+  <div class="mx-3" style = "font-family : Serif">
+    <h2>GuruJi Store | Smartphone</h2>
+    <!-- Slider 2 -->
+    <div class="owl-carousel" id="slider4">
+      {% for mobile in mobiles %}
+      <div class="card" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); transition: 0.3s border-radius: 5px; height:450px;">
+        <a href="{% url 'product-detail' %}" class="btn">
+          <div class="item"><img src="{{mobile.product_image.url}}" alt="" height="300px"><span>{{mobile.title}}</span><br><span class="fs-5">Rs. {{mobile.discount_price}}</span>
+          </div>
+        </a>
+     </div>
+      {% endfor %}
+    </div>
+  </div>
 </div>
-<!-- End 2nd Product Slider -->
+<!-- End 3rd Product Slider -->
 {% endblock main-content %}
 
