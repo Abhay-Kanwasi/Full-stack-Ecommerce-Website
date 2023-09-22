@@ -1,6 +1,8 @@
 from django.shortcuts import render
 from django.views import View
 from .models import Product, Cart, Customer, OrderedPlaced
+from .forms import CustomerRegisterationForm
+
 
 class ProductView(View):
     def get(self, request):
@@ -48,8 +50,15 @@ def mobile(request):
 def login(request):
  return render(request, 'app/login.html')
 
-def customerregistration(request):
- return render(request, 'app/customerregistration.html')
-
+class CustomerRegistrationView(View):
+  def get(self, request):
+    form = CustomerRegisterationForm()
+    return render(request, 'app/customerregistration.html', {'form' : form})
+  
+  def post(self, request):
+    form = CustomerRegisterationForm(request.POST)
+    if form.is_valid():
+      form.save()
+    return render(request, 'app/customerregistration.html', {'form' : form})
 def checkout(request):
  return render(request, 'app/checkout.html')
