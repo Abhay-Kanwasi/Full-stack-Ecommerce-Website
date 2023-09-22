@@ -15,6 +15,14 @@ class ProductDetailView(View):
       product = Product.objects.get(pk=pk)
       return render(request, 'app/productdetail.html', {'product' : product})
 
+def mobile(request, data=None):
+    if data == None:
+        mobiles = Product.objects.filter(category='M')
+    elif data == 'Vivo' or data == 'Realme':
+        mobiles = Product.objects.filter(category='M', brand=data)
+    return render(request, 'app/mobile.html', {'mobiles': mobiles})
+
+
 
 def add_to_cart(request):
  return render(request, 'app/addtocart.html')

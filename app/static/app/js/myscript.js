@@ -1,6 +1,6 @@
 $('#slider1, #slider2, #slider3, #slider4').owlCarousel({
     loop: true,
-    margin: 20,
+    margin: 15,
     responsiveClass: true,
     responsive: {
         0: {
@@ -14,7 +14,7 @@ $('#slider1, #slider2, #slider3, #slider4').owlCarousel({
             autoplay: true,
         },
         1000: {
-            items: 5,
+            items: 4,
             nav: true,
             loop: true,
             autoplay: true,
