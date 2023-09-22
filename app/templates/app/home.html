@@ -52,7 +52,7 @@
     <div class="owl-carousel" id="slider1">
       {% for wears in bottomwears %}
       <div class="card" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); transition: 0.3s border-radius: 5px; height:450px">
-      <a href="{% url 'product-detail' %}" class="btn">
+      <a href="{% url 'product-detail' wears.id %}" class="btn">
         <div class="item"><img src="{{wears.product_image.url}}" alt="" height="300px"><span>{{wears.title}}</span><br><span class="fs-5">Rs. {{wears.discount_price}}</span></div>
       </a>
     </div>
@@ -103,7 +103,7 @@
   <div class="owl-carousel" id="slider2">
     {% for wears in topwears %}
     <div class="card" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); transition: 0.3s border-radius: 5px; height:450px;">
-      <a href="{% url 'product-detail' %}" class="btn">
+      <a href="{% url 'product-detail' wears.id %}" class="btn">
         <div class="item"><img src="{{wears.product_image.url}}" alt="" height="300px"><span>{{wears.title}}</span><br><span class="fs-5">Rs. {{wears.discount_price}}</span></div>
      </a>
     </div>
@@ -119,7 +119,7 @@
     <div class="owl-carousel" id="slider3">
       {% for laptop in laptops %}
       <div class="card" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); transition: 0.3s border-radius: 5px; height:450px;">
-        <a href="{% url 'product-detail' %}" class="btn">
+        <a href="{% url 'product-detail' laptop.id %}" class="btn">
           <div class="item"><img src="{{laptop.product_image.url}}" alt="" height="300px"><span>{{laptop.title}}</span><br><span class="fs-5">Rs. {{laptop.discount_price}}</span>
           </div>
         </a>
@@ -134,7 +134,7 @@
     <div class="owl-carousel" id="slider4">
       {% for mobile in mobiles %}
       <div class="card" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); transition: 0.3s border-radius: 5px; height:450px;">
-        <a href="{% url 'product-detail' %}" class="btn">
+        <a href="{% url 'product-detail' mobile.id %}" class="btn">
           <div class="item"><img src="{{mobile.product_image.url}}" alt="" height="300px"><span>{{mobile.title}}</span><br><span class="fs-5">Rs. {{mobile.discount_price}}</span>
           </div>
         </a>
