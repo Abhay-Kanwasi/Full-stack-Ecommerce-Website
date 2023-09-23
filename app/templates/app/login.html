@@ -13,7 +13,7 @@
     <div class="form-group">
         {{fm.label_tag}} {{fm}} <small class="text-danger">{{fm.errors|striptags}}</small><br>
     {% endfor %}
-    <small><a href="{% url 'changepassword' %}">Forget Password</a></small><br>
+    <small><a href="{% url 'passwordchange' %}">Forget Password</a></small><br>
     <input type="submit" class="btn btn-primary mt-4" value="Login"><br>
     <div class="text-center text-primary fw-bold">
         <small>New to Guru Ji Store ? <a href="{% url 'customerregistration' %}" class="text-danger">Create an Account</a></small>
