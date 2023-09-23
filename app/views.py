@@ -47,9 +47,6 @@ def change_password(request):
 def mobile(request):
  return render(request, 'app/mobile.html')
 
-def login(request):
- return render(request, 'app/login.html')
-
 class CustomerRegistrationView(View):
   def get(self, request):
     form = CustomerRegisterationForm()
