@@ -1,8 +1,11 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views import View
 from .models import Product, Cart, Customer, OrderedPlaced
 from .forms import CustomerRegisterationForm, CustomerProfileForm
 from django.contrib import messages
+from django.db.models import Q
+from django.http import JsonResponse
+
 
 class ProductView(View):
     def get(self, request):
@@ -46,7 +49,105 @@ class ProfileView(View):
 
 
 def add_to_cart(request):
- return render(request, 'app/addtocart.html')
+  user = request.user
+  product_id = request.GET.get('prod_id')
+  product = Product.objects.get(id = product_id)
+  Cart(user=user, product = product).save()
+  return redirect('/cart')
+
+def show_cart(request):
+  if request.user.is_authenticated:
+    user = request.user
+    cart = Cart.objects.filter(user = user)
+    print(cart)
+    amount = 0.0
+    shipping_amount = 0.0
+    total_amount = 0.0
+    cart_product = [product for product in Cart.objects.all() if product.user == user]
+    if cart_product:
+      for product in cart_product:
+        tempamount = (product.quantity * product.product.discount_price)
+        amount += tempamount
+        if amount > 500:
+          shipping_amount = 70.0
+        else:
+          shipping_amount = 0.0
+        total_amount = amount + shipping_amount
+      return render(request, 'app/addtocart.html', {'carts' : cart, 'total_amount':total_amount, 'amount' : amount, 'shipping_amount' : shipping_amount})
+    else:
+      return render(request, 'app/emptycart.html')
+
+def plus_cart(request):
+  if request.method == 'GET':
+    prod_id = request.GET['prod_id']
+    # in cart get one object(that's we using get) which product id we have in prod_id and this product must be of loginned user
+    c = Cart.objects.get(Q(product=prod_id) & Q(user=request.user))
+    c.quantity+=1
+    c.save()
+    user = request.user
+    amount = 0.0
+    shipping_amount = 70.0
+    cart_product = [product for product in Cart.objects.all() if product.user == user]
+    for product in cart_product:
+      tempamount = (product.quantity * product.product.discount_price)
+      amount += tempamount
+      if amount > 500:
+        shipping_amount = 70.0
+      else:
+        shipping_amount = 0.0
+      total_amount = amount + shipping_amount
+    data = {
+      'quantity' : c.quantity,
+      'amount' : amount,
+      'shippingamount' : shipping_amount,
+      'totalamount' : total_amount
+    }
+    return JsonResponse(data)
+  
+def minus_cart(request):
+  if request.method == 'GET':
+    prod_id = request.GET['prod_id']
+    # in cart get one object(that's we using get) which product id we have in prod_id and this product must be of loginned user
+    c = Cart.objects.get(Q(product=prod_id) & Q(user=request.user))
+    c.quantity-=1
+    c.save()
+    user = request.user
+    amount = 0.0
+    shipping_amount = 70.0
+    cart_product = [product for product in Cart.objects.all() if product.user == user]
+    for product in cart_product:
+      tempamount = (product.quantity * product.product.discount_price)
+      amount += tempamount
+      total_amount = amount + shipping_amount
+    data = {
+      'quantity' : c.quantity,
+      'amount' : amount,
+      'shippingamount' : shipping_amount,
+      'totalamount' : total_amount
+    }
+    return JsonResponse(data)
+  
+def remove_cart(request):
+  if request.method == 'GET':
+    prod_id = request.GET['prod_id']
+    # in cart get one object(that's we using get) which product id we have in prod_id and this product must be of loginned user
+    c = Cart.objects.get(Q(product=prod_id) & Q(user=request.user))
+    c.delete()
+    user = request.user
+    amount = 0.0
+    shipping_amount = 70.0
+    cart_product = [product for product in Cart.objects.all() if product.user == user]
+    for product in cart_product:
+      tempamount = (product.quantity * product.product.discount_price)
+      amount += tempamount
+      total_amount = amount + shipping_amount
+    data = {
+      'amount' : amount,
+      'totalamount' : total_amount
+    }
+    return JsonResponse(data)
+
+
 
 def buy_now(request):
  return render(request, 'app/buynow.html')
