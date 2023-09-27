@@ -43,21 +43,24 @@ To run this project locally, follow these steps:
 1. **Clone the repository:**
    ```bash
    git clone https://github.com/Abhay-Kanwasi/Full-stack-Ecommerce-Website
-   cd your-repo```
+   cd your-repo
+   ```
 
 2.  **Create a virtual environment and activate it:**
-```python -m venv venv
-  `venv\Scripts\activate`
+```bash
+  python -m venv venv
+  `venv\Scripts\activate
 ```
 
+
 3. **Install the required dependencies:**
-```
-pip install -r requirements.txt
+```bash
+  pip install -r requirements.txt
 ```
 
 4. **Run the Django development server:**
-```
-python manage.py runserver
+```bash
+  python manage.py runserver
 ```
 
 Access the website in your web browser at http://localhost:8000/
