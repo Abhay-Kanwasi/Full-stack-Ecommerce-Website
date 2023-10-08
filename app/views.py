@@ -158,7 +158,6 @@ def remove_cart(request):
       tempamount = (product.quantity * product.product.discount_price)
       amount += tempamount
       total_amount = amount + shipping_amount
-      
     data = {
       'amount' : amount,
       'totalamount' : total_amount
