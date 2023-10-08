@@ -20,7 +20,9 @@ class ProductView(View):
 class ProductDetailView(View):
     def get(self, request, pk):
       product = Product.objects.get(pk=pk)
-      return render(request, 'app/productdetail.html', {'product' : product})
+      item_already_in_cart = False
+      item_already_in_cart = Cart.objects.filter(Q(product=product.id) & Q(user=request.user)).exists()
+      return render(request, 'app/productdetail.html', {'product' : product, 'item_already_in_cart' : item_already_in_cart})
     
 class CustomerRegistrationView(View):
   def get(self, request):
@@ -149,7 +151,6 @@ def remove_cart(request):
     # in cart get one object(that's we using get) which product id we have in prod_id and this product must be of loginned user
     c = Cart.objects.get(Q(product=prod_id) & Q(user=request.user))
     c.delete()
-    user = request.user
     amount = 0.0
     shipping_amount = 70.0
     cart_product = [product for product in Cart.objects.all() if product.user == user]
@@ -157,6 +158,7 @@ def remove_cart(request):
       tempamount = (product.quantity * product.product.discount_price)
       amount += tempamount
       total_amount = amount + shipping_amount
+      
     data = {
       'amount' : amount,
       'totalamount' : total_amount

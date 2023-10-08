@@ -58,29 +58,16 @@ $('.minus-cart').click(function () {
 
 $('.remove-cart').click(function () {
     var id = $(this).attr("pid").toString();
-    console.log(id);
-
+    var eml = this
     $.ajax({
         type: "GET",
-        url: "/removecart/",  // Updated URL
+        url: "/removecart",
         data: {
             prod_id: id
         },
-        success: function (data) {
-            console.log("Delete")
-            // Check if the response contains 'amount' and 'totalamount' properties
-            if ('amount' in data && 'totalamount' in data) {
-                document.getElementById("amount").innerText = data.amount;
-                document.getElementById("totalamount").innerText = data.totalamount;
-                element.parentNode.parentNode.parentNode.parentNode.remove()
-            } else {
-                console.log("Unexpected response format:", data);
-            }
-        },
-        error: function (xhr, textStatus, errorThrown) {
-            console.log("Error:", errorThrown);
+        sucess: function (data) {
+            document.getElementById("amount").innerText = data.amount
+            document.getElementById("totalamount").innerText = data.totalamount
         }
-    });
-});
-
-
+    })
+})
