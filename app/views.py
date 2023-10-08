@@ -6,6 +6,8 @@ from django.contrib import messages
 from django.db.models import Q
 from django.http import JsonResponse
 
+from django.contrib.auth.decorators import login_required # for function based view
+from django.utils.decorators import method_decorator # for class based view
 
 class ProductView(View):
     def get(self, request):
@@ -19,6 +21,18 @@ class ProductDetailView(View):
     def get(self, request, pk):
       product = Product.objects.get(pk=pk)
       return render(request, 'app/productdetail.html', {'product' : product})
+    
+class CustomerRegistrationView(View):
+  def get(self, request):
+    form = CustomerRegisterationForm()
+    return render(request, 'app/customerregistration.html', {'form' : form})
+  
+  def post(self, request):
+    form = CustomerRegisterationForm(request.POST)
+    if form.is_valid():
+      messages.success(request, 'Congratulations! You registered sucessfully.')
+      form.save()
+    return render(request, 'app/customerregistration.html', {'form' : form})
 
 def mobile(request, data=None):
     if data == None:
@@ -27,7 +41,7 @@ def mobile(request, data=None):
         mobiles = Product.objects.filter(category='M', brand=data)
     return render(request, 'app/mobile.html', {'mobiles': mobiles})
 
-
+@method_decorator(login_required, name='dispatch')
 class ProfileView(View):
   def get(self, request):
     form = CustomerProfileForm()
@@ -47,7 +61,7 @@ class ProfileView(View):
       messages.success(request, 'Your profile updated successfully!')
     return render(request, 'app/profile.html', {'form' : form, 'active' : 'btn-primary'})
 
-
+@login_required
 def add_to_cart(request):
   user = request.user
   product_id = request.GET.get('prod_id')
@@ -55,6 +69,7 @@ def add_to_cart(request):
   Cart(user=user, product = product).save()
   return redirect('/cart')
 
+@login_required
 def show_cart(request):
   if request.user.is_authenticated:
     user = request.user
@@ -126,7 +141,8 @@ def minus_cart(request):
       'totalamount' : total_amount
     }
     return JsonResponse(data)
-  
+
+
 def remove_cart(request):
   if request.method == 'GET':
     prod_id = request.GET['prod_id']
@@ -151,10 +167,12 @@ def remove_cart(request):
 def buy_now(request):
  return render(request, 'app/buynow.html')
 
+@login_required
 def address(request):
  current_user_address = Customer.objects.filter(user = request.user)
  return render(request, 'app/address.html', {'current_user_address' : current_user_address, 'active' : 'btn-primary'})
 
+@login_required
 def orders(request):
   op = OrderedPlaced.objects.filter(user=request.user)
   return render(request, 'app/orders.html', {'order_placed' : op})
@@ -162,19 +180,8 @@ def orders(request):
 def mobile(request):
  return render(request, 'app/mobile.html')
 
-class CustomerRegistrationView(View):
-  def get(self, request):
-    form = CustomerRegisterationForm()
-    return render(request, 'app/customerregistration.html', {'form' : form})
-  
-  def post(self, request):
-    form = CustomerRegisterationForm(request.POST)
-    if form.is_valid():
-      messages.success(request, 'Congratulations! You registered sucessfully.')
-      form.save()
-    return render(request, 'app/customerregistration.html', {'form' : form})
 
-
+@login_required
 def checkout(request):
   user = request.user
   add = Customer.objects.filter(user = user)
@@ -191,6 +198,7 @@ def checkout(request):
     totalamount = amount + shipping_amount
   return render(request, 'app/checkout.html', {'add' : add, 'totalamount' : totalamount, 'cart_items' : cart_item})
 
+@login_required
 def payment_done(request):
   user = request.user
   custid = request.GET.get('custid') 
