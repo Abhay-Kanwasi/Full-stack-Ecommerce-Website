@@ -148,7 +148,6 @@ def remove_cart(request):
     return JsonResponse(data)
 
 
-
 def buy_now(request):
  return render(request, 'app/buynow.html')
 
@@ -157,7 +156,8 @@ def address(request):
  return render(request, 'app/address.html', {'current_user_address' : current_user_address, 'active' : 'btn-primary'})
 
 def orders(request):
- return render(request, 'app/orders.html')
+  op = OrderedPlaced.objects.filter(user=request.user)
+  return render(request, 'app/orders.html', {'order_placed' : op})
 
 def mobile(request):
  return render(request, 'app/mobile.html')
@@ -176,4 +176,27 @@ class CustomerRegistrationView(View):
 
 
 def checkout(request):
- return render(request, 'app/checkout.html')
+  user = request.user
+  add = Customer.objects.filter(user = user)
+  cart_item = Cart.objects.filter(user = user)
+  amount = 0.0
+  shipping_amount = 70.0
+  totalamount = 0.0
+  cart_product = [product for product in Cart.objects.all() if product.user == user]
+  
+  if cart_product:
+    for product in cart_product:
+      tempamount = (product.quantity * product.product.discount_price)
+      amount += tempamount
+    totalamount = amount + shipping_amount
+  return render(request, 'app/checkout.html', {'add' : add, 'totalamount' : totalamount, 'cart_items' : cart_item})
+
+def payment_done(request):
+  user = request.user
+  custid = request.GET.get('custid') 
+  customer = Customer.objects.get(id=custid)
+  cart = Cart.objects.filter(user=user)
+  for c in cart:
+    OrderedPlaced(user=user, customer = customer, product = c.product, quantity = c.quantity).save()
+    c.delete()
+  return redirect("orders")
