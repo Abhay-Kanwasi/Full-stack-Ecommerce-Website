@@ -151,6 +151,7 @@ def remove_cart(request):
     # in cart get one object(that's we using get) which product id we have in prod_id and this product must be of loginned user
     c = Cart.objects.get(Q(product=prod_id) & Q(user=request.user))
     c.delete()
+    user = request.user
     amount = 0.0
     shipping_amount = 70.0
     cart_product = [product for product in Cart.objects.all() if product.user == user]
